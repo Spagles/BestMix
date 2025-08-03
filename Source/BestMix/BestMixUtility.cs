@@ -44,20 +44,6 @@ public class BestMixUtility
             return true;
         }
 
-        /*
-        List<IntVec3> cells = r?.Cells.ToList<IntVec3>();
-        if ((cells != null) && (cells.Count > 0))
-        {
-            foreach (IntVec3 cell in cells)
-            {
-                if (((float)((cell - billGiver.Position).LengthHorizontalSquared)) < ((float)(bill.ingredientSearchRadius * bill.ingredientSearchRadius)))
-                {
-                    return true;
-                }
-            }
-        }
-        */
-
         // optimised to region corners
         var map = billGiver?.Map;
 
@@ -131,13 +117,13 @@ public class BestMixUtility
         }
 
         //if (billGiver.TryGetComp<CompBestMix>().CurMode == "DIS")
-        var CBM = billGiver.TryGetComp<CompBestMix>();
-        if (CBM == null)
+        var cbm = billGiver.TryGetComp<CompBestMix>();
+        if (cbm == null)
         {
             return false;
         }
 
-        return BMBillUtility.UseBMixMode(CBM, billGiver, bill) == "DIS";
+        return BMBillUtility.UseBMixMode(cbm, billGiver, bill) == "DIS";
     }
 
     public static bool IsValidForComp(Thing thing)
@@ -152,7 +138,7 @@ public class BestMixUtility
             building.def.building.isMealSource;
     }
 
-    public static float RNDFloat()
+    public static float RndFloat()
     {
         return Rand.Range(1f, 9999f);
     }
@@ -205,203 +191,203 @@ public class BestMixUtility
 
     public static string GetBMixIconPath(string BMixMode)
     {
-        var BMixIconPath = "UI/BestMix/";
+        var bMixIconPath = "UI/BestMix/";
 
         switch (BMixMode)
         {
             case "DIS":
-                BMixIconPath += "Nearest";
+                bMixIconPath += "Nearest";
                 break;
             case "DTR":
-                BMixIconPath += "Expiry";
+                bMixIconPath += "Expiry";
                 break;
             case "HPT":
-                BMixIconPath += "Damaged";
+                bMixIconPath += "Damaged";
                 break;
             case "RHP":
-                BMixIconPath += "Robust";
+                bMixIconPath += "Robust";
                 break;
             case "VLC":
-                BMixIconPath += "Cheapest";
+                bMixIconPath += "Cheapest";
                 break;
             case "VLE":
-                BMixIconPath += "Value";
+                bMixIconPath += "Value";
                 break;
             case "TMP":
-                BMixIconPath += "Warmest";
+                bMixIconPath += "Warmest";
                 break;
             case "FRZ":
-                BMixIconPath += "Coldest";
+                bMixIconPath += "Coldest";
                 break;
             case "RND":
-                BMixIconPath += "Random";
+                bMixIconPath += "Random";
                 break;
             case "BIT":
-                BMixIconPath += "Fraction";
+                bMixIconPath += "Fraction";
                 break;
             case "MST":
-                BMixIconPath += "StockMost";
+                bMixIconPath += "StockMost";
                 break;
             case "LST":
-                BMixIconPath += "StockLeast";
+                bMixIconPath += "StockLeast";
                 break;
             case "BTY":
-                BMixIconPath += "Beauty";
+                bMixIconPath += "Beauty";
                 break;
             case "UGY":
-                BMixIconPath += "Duckling";
+                bMixIconPath += "Duckling";
                 break;
             case "HVY":
-                BMixIconPath += "Heaviest";
+                bMixIconPath += "Heaviest";
                 break;
             case "LGT":
-                BMixIconPath += "Lightest";
+                bMixIconPath += "Lightest";
                 break;
             case "FLM":
-                BMixIconPath += "Ignition";
+                bMixIconPath += "Ignition";
                 break;
             case "PTB":
-                BMixIconPath += "ProtectBlunt";
+                bMixIconPath += "ProtectBlunt";
                 break;
             case "PTS":
-                BMixIconPath += "ProtectSharp";
+                bMixIconPath += "ProtectSharp";
                 break;
             case "PTH":
-                BMixIconPath += "ProtectHeat";
+                bMixIconPath += "ProtectHeat";
                 break;
             case "PTE":
-                BMixIconPath += "ProtectElectric";
+                bMixIconPath += "ProtectElectric";
                 break;
             case "INH":
-                BMixIconPath += "InsulateHeat";
+                bMixIconPath += "InsulateHeat";
                 break;
             case "INC":
-                BMixIconPath += "InsulateCold";
+                bMixIconPath += "InsulateCold";
                 break;
             case "SOF":
-                BMixIconPath += "Softness";
+                bMixIconPath += "Softness";
                 break;
             case "WSP":
-                BMixIconPath += "Sharpest";
+                bMixIconPath += "Sharpest";
                 break;
             case "WBT":
-                BMixIconPath += "Bluntest";
+                bMixIconPath += "Bluntest";
                 break;
             case "NUL":
-                BMixIconPath += "NutritionLow";
+                bMixIconPath += "NutritionLow";
                 break;
             case "NUH":
-                BMixIconPath += "NutritionHigh";
+                bMixIconPath += "NutritionHigh";
                 break;
             default:
-                BMixIconPath += "Nearest";
+                bMixIconPath += "Nearest";
                 break;
         }
 
-        return BMixIconPath;
+        return bMixIconPath;
     }
 
-    public static string GetBMixModeDisplay(string BMixMode)
+    public static string GetBMixModeDisplay(string bMixMode)
     {
-        string ModeDisplay;
-        switch (BMixMode)
+        string modeDisplay;
+        switch (bMixMode)
         {
             case "DIS":
-                ModeDisplay = "BestMix.ModeDistanceDIS".Translate();
+                modeDisplay = "BestMix.ModeDistanceDIS".Translate();
                 break;
             case "DTR":
-                ModeDisplay = "BestMix.ModeDaysToRotDTR".Translate();
+                modeDisplay = "BestMix.ModeDaysToRotDTR".Translate();
                 break;
             case "HPT":
-                ModeDisplay = "BestMix.ModeHealthHPT".Translate();
+                modeDisplay = "BestMix.ModeHealthHPT".Translate();
                 break;
             case "RHP":
-                ModeDisplay = "BestMix.ModeHealthRHP".Translate();
+                modeDisplay = "BestMix.ModeHealthRHP".Translate();
                 break;
             case "VLC":
-                ModeDisplay = "BestMix.ModeValueVLC".Translate();
+                modeDisplay = "BestMix.ModeValueVLC".Translate();
                 break;
             case "VLE":
-                ModeDisplay = "BestMix.ModeValueVLE".Translate();
+                modeDisplay = "BestMix.ModeValueVLE".Translate();
                 break;
             case "RND":
-                ModeDisplay = "BestMix.ModeRandomRND".Translate();
+                modeDisplay = "BestMix.ModeRandomRND".Translate();
                 break;
             case "TMP":
-                ModeDisplay = "BestMix.ModeTemperatureTMP".Translate();
+                modeDisplay = "BestMix.ModeTemperatureTMP".Translate();
                 break;
             case "FRZ":
-                ModeDisplay = "BestMix.ModeTemperatureFRZ".Translate();
+                modeDisplay = "BestMix.ModeTemperatureFRZ".Translate();
                 break;
             case "BIT":
-                ModeDisplay = "BestMix.ModeFractionBIT".Translate();
+                modeDisplay = "BestMix.ModeFractionBIT".Translate();
                 break;
             case "MST":
-                ModeDisplay = "BestMix.ModeStockMST".Translate();
+                modeDisplay = "BestMix.ModeStockMST".Translate();
                 break;
             case "LST":
-                ModeDisplay = "BestMix.ModeStockLST".Translate();
+                modeDisplay = "BestMix.ModeStockLST".Translate();
                 break;
             case "BTY":
-                ModeDisplay = "BestMix.ModeBeautyBTY".Translate();
+                modeDisplay = "BestMix.ModeBeautyBTY".Translate();
                 break;
             case "UGY":
-                ModeDisplay = "BestMix.ModeBeautyUGY".Translate();
+                modeDisplay = "BestMix.ModeBeautyUGY".Translate();
                 break;
             case "HVY":
-                ModeDisplay = "BestMix.ModeMassHVY".Translate();
+                modeDisplay = "BestMix.ModeMassHVY".Translate();
                 break;
             case "LGT":
-                ModeDisplay = "BestMix.ModeMassLGT".Translate();
+                modeDisplay = "BestMix.ModeMassLGT".Translate();
                 break;
             case "FLM":
-                ModeDisplay = "BestMix.ModeFlammableFLM".Translate();
+                modeDisplay = "BestMix.ModeFlammableFLM".Translate();
                 break;
             case "PTB":
-                ModeDisplay = "BestMix.ModeProtectPTB".Translate();
+                modeDisplay = "BestMix.ModeProtectPTB".Translate();
                 break;
             case "PTS":
-                ModeDisplay = "BestMix.ModeProtectPTS".Translate();
+                modeDisplay = "BestMix.ModeProtectPTS".Translate();
                 break;
             case "PTH":
-                ModeDisplay = "BestMix.ModeProtectPTH".Translate();
+                modeDisplay = "BestMix.ModeProtectPTH".Translate();
                 break;
             case "PTE":
-                ModeDisplay = "BestMix.ModeProtectPTE".Translate();
+                modeDisplay = "BestMix.ModeProtectPTE".Translate();
                 break;
             case "INH":
-                ModeDisplay = "BestMix.ModeInsulateINH".Translate();
+                modeDisplay = "BestMix.ModeInsulateINH".Translate();
                 break;
             case "INC":
-                ModeDisplay = "BestMix.ModeInsulateINC".Translate();
+                modeDisplay = "BestMix.ModeInsulateINC".Translate();
                 break;
             case "SOF":
-                ModeDisplay = "BestMix.ModeTextileSOF".Translate();
+                modeDisplay = "BestMix.ModeTextileSOF".Translate();
                 break;
             case "WSP":
-                ModeDisplay = "BestMix.ModeWeaponWSP".Translate();
+                modeDisplay = "BestMix.ModeWeaponWSP".Translate();
                 break;
             case "WBT":
-                ModeDisplay = "BestMix.ModeWeaponWBT".Translate();
+                modeDisplay = "BestMix.ModeWeaponWBT".Translate();
                 break;
             case "NUL":
-                ModeDisplay = "BestMix.ModeFoodNUL".Translate();
+                modeDisplay = "BestMix.ModeFoodNUL".Translate();
                 break;
             case "NUH":
-                ModeDisplay = "BestMix.ModeFoodNUH".Translate();
+                modeDisplay = "BestMix.ModeFoodNUH".Translate();
                 break;
             default:
-                ModeDisplay = "BestMix.ModeDistanceDIS".Translate();
+                modeDisplay = "BestMix.ModeDistanceDIS".Translate();
                 break;
         }
 
-        return ModeDisplay;
+        return modeDisplay;
     }
 
-    public static Comparison<Thing> GetBMixComparer(Thing billGiver, IntVec3 rootCell, Bill bill, out bool rnd)
+    private static Comparison<Thing> getBMixComparer(Thing billGiver, IntVec3 rootCell, Bill bill, out bool rnd)
     {
         rnd = false;
-        var BMixMode = "DIS";
+        var bMixMode = "DIS";
 
         if (IsValidForComp(billGiver))
         {
@@ -409,12 +395,12 @@ public class BestMixUtility
             if (compBM != null)
             {
                 //BMixMode = compBM.CurMode;
-                BMixMode = BMBillUtility.UseBMixMode(compBM, billGiver, bill);
+                bMixMode = BMBillUtility.UseBMixMode(compBM, billGiver, bill);
             }
         }
 
         Comparison<Thing> comparison;
-        switch (BMixMode)
+        switch (bMixMode)
         {
             case "DIS":
                 comparison = delegate(Thing t1, Thing t2)
@@ -526,24 +512,24 @@ public class BestMixUtility
             case "MST":
                 comparison = delegate(Thing t1, Thing t2)
                 {
-                    var thing2Amount = GetStockAmount(t2, billGiver, bill);
-                    var thing1Amount = GetStockAmount(t1, billGiver, bill);
+                    var thing2Amount = getStockAmount(t2, billGiver, bill);
+                    var thing1Amount = getStockAmount(t1, billGiver, bill);
                     return thing2Amount.CompareTo(thing1Amount);
                 };
                 break;
             case "LST":
                 comparison = delegate(Thing t1, Thing t2)
                 {
-                    var thing1Amount = GetStockAmount(t1, billGiver, bill);
-                    var thing2Amount = GetStockAmount(t2, billGiver, bill);
+                    var thing1Amount = getStockAmount(t1, billGiver, bill);
+                    var thing2Amount = getStockAmount(t2, billGiver, bill);
                     return thing1Amount.CompareTo(thing2Amount);
                 };
                 break;
             case "RND":
                 comparison = delegate
                 {
-                    var num = RNDFloat();
-                    var value = RNDFloat();
+                    var num = RndFloat();
+                    var value = RndFloat();
                     return num.CompareTo(value);
                 };
                 rnd = true;
@@ -742,7 +728,7 @@ public class BestMixUtility
         return comparison;
     }
 
-    private static float GetStockAmount(Thing t, Thing billGiver, Bill bill)
+    private static float getStockAmount(Thing t, Thing billGiver, Bill bill)
     {
         var num = 0f;
 
@@ -754,7 +740,7 @@ public class BestMixUtility
 
         foreach (var thing in things)
         {
-            if (!BMStockInRadius(thing, billGiver, bill))
+            if (!bmStockInRadius(thing, billGiver, bill))
             {
                 continue;
             }
@@ -767,7 +753,7 @@ public class BestMixUtility
                 }
             }
 
-            if (BMIsForbidden(thing))
+            if (bmIsForbidden(thing))
             {
                 continue;
             }
@@ -790,7 +776,7 @@ public class BestMixUtility
             return;
         }
 
-        var comparison = GetBMixComparer(WorkGiver_DoBill_TryFindBestBillIngredients.curGiver, rootCell, bill,
+        var comparison = getBMixComparer(WorkGiver_DoBill_TryFindBestBillIngredients.curGiver, rootCell, bill,
             out var rnd);
         if (rnd)
         {
@@ -805,12 +791,11 @@ public class BestMixUtility
     // Debug
     internal static void BMixDebugList(List<Thing> list, Thing billGiver, IntVec3 rootCell, Bill bill)
     {
-#if !DEBUG
         if (!Prefs.DevMode || !Controller.Settings.DebugMaster || !Controller.Settings.DebugSort)
         {
             return;
         }
-#endif
+
         if (!IsValidForComp(billGiver))
         {
             return;
@@ -835,7 +820,7 @@ public class BestMixUtility
         for (var i = 0; i < list.Count; i++)
         {
             var thing = list[i];
-            var debugMsg = MakeDebugString(i, thing, billGiver, rootCell, bill,
+            var debugMsg = makeDebugString(i, thing, billGiver, rootCell, bill,
                 BMBillUtility.UseBMixMode(compBMix, billGiver, bill));
             Log.Message(debugMsg);
         }
@@ -843,12 +828,11 @@ public class BestMixUtility
 
     internal static void DebugChosenList(Thing billGiver, List<ThingCount> p_chosen)
     {
-#if !DEBUG
         if (!Prefs.DevMode || !Controller.Settings.DebugMaster || !Controller.Settings.DebugChosen)
         {
             return;
         }
-#endif
+
         if (!IsValidForComp(billGiver))
         {
             return;
@@ -885,35 +869,24 @@ public class BestMixUtility
 
     internal static void DebugFoundAll(Thing billGiver, bool foundAll)
     {
-#if !DEBUG
         if (!Prefs.DevMode || !Controller.Settings.DebugMaster || !Controller.Settings.DebugFound)
         {
             return;
         }
-#endif
 
         if (!IsValidForComp(billGiver))
         {
-#if DEBUG
-                Log.Message($"Not IsValidForComp {billGiver}");
-#endif
             return;
         }
 
         var compBMix = billGiver.TryGetComp<CompBestMix>();
         if (compBMix == null)
         {
-#if DEBUG
-                Log.Message($"No compBMix for {billGiver}");
-#endif
             return;
         }
 
         if (!compBMix.BMixDebug)
         {
-#if DEBUG
-                Log.Message($"Not compBMix.BMixDebug {billGiver}");
-#endif
             return;
         }
 
@@ -930,7 +903,7 @@ public class BestMixUtility
         Log.Message(debugMsg);
     }
 
-    private static string MakeDebugString(int indx, Thing thing, Thing billGiver, IntVec3 rootCell, Bill bill,
+    private static string makeDebugString(int indx, Thing thing, Thing billGiver, IntVec3 rootCell, Bill bill,
         string BMixMode)
     {
         var stat = 0f;
@@ -983,13 +956,13 @@ public class BestMixUtility
                 stat = thing.def.stackLimit / (float)Math.Max(1, thing.stackCount);
                 break;
             case "MST":
-                stat = GetStockAmount(thing, billGiver, bill);
+                stat = getStockAmount(thing, billGiver, bill);
                 break;
             case "LST":
-                stat = 0f - GetStockAmount(thing, billGiver, bill);
+                stat = 0f - getStockAmount(thing, billGiver, bill);
                 break;
             case "RND":
-                stat = RNDFloat();
+                stat = RndFloat();
                 break;
             case "BTY":
                 stat = thing.GetStatValue(StatDefOf.Beauty);
@@ -1073,12 +1046,12 @@ public class BestMixUtility
         return debugMsg;
     }
 
-    public static bool BMIsForbidden(Thing thing)
+    private static bool bmIsForbidden(Thing thing)
     {
         return thing?.TryGetComp<CompForbiddable>() != null && thing.TryGetComp<CompForbiddable>().Forbidden;
     }
 
-    private static bool BMStockInRadius(Thing t, Thing billGiver, Bill bill)
+    private static bool bmStockInRadius(Thing t, Thing billGiver, Bill bill)
     {
         if (Controller.Settings.mapStock)
         {

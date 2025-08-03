@@ -9,7 +9,7 @@ namespace BestMix.Patches;
 [HarmonyPatch(typeof(WorkGiver_DoBill), "TryFindBestBillIngredientsInSet_AllowMix")]
 public static class WorkGiver_DoBill_TryFindBestBillIngredientsInSet_AllowMix
 {
-    public const int sortILIndex = 6;
+    private const int sortILIndex = 6;
 
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
@@ -21,7 +21,6 @@ public static class WorkGiver_DoBill_TryFindBestBillIngredientsInSet_AllowMix
                 codes[i + sortILIndex].operand.ToString().Contains("SortBy"))
             {
                 found = true;
-                //yield return new CodeInstruction(OpCodes.Ldarg_0);
                 yield return new CodeInstruction(OpCodes.Ldarg_3);
                 yield return new CodeInstruction(OpCodes.Ldarg_1);
                 yield return new CodeInstruction(OpCodes.Call,

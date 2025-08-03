@@ -22,20 +22,20 @@ public class BMBillUtility
             return mode;
         }
 
-        var BillModeListing = compBM.BillBMModes;
-        if (BillModeListing.Count <= 0)
+        var billModeListing = compBM.BillBMModes;
+        if (billModeListing.Count <= 0)
         {
             return mode;
         }
 
-        foreach (var BillMode in BillModeListing)
+        foreach (var billMode in billModeListing)
         {
-            if (BillValuePart(BillMode) != bill.GetUniqueLoadID())
+            if (billValuePart(billMode) != bill.GetUniqueLoadID())
             {
                 continue;
             }
 
-            mode = ModeValuePart(BillMode);
+            mode = modeValuePart(billMode);
             if (mode == "NON")
             {
                 mode = compBM.CurMode;
@@ -47,90 +47,83 @@ public class BMBillUtility
         return mode;
     }
 
-    public static Texture2D GetBillBMTex(Thing billGiver, Bill bill)
+    public static Texture2D GetBillBmTex(Thing billGiver, Bill bill)
     {
         var mode = GetBillBMMode(billGiver, bill);
-        var TexPath = "UI/BestMix/NONIcon";
+        var texPath = "UI/BestMix/NONIcon";
 
         if (mode != "NON")
         {
-            TexPath = BestMixUtility.GetBMixIconPath(mode);
+            texPath = BestMixUtility.GetBMixIconPath(mode);
         }
 
-        TexPath += "Bill";
+        texPath += "Bill";
 
-        //Log.Message("TexPath: " + TexPath);
-
-        var tex = ContentFinder<Texture2D>.Get(TexPath, false);
+        var tex = ContentFinder<Texture2D>.Get(texPath, false);
         return tex;
     }
 
     private static string GetBillBMMode(Thing billGiver, Bill bill)
     {
         var mode = "NON";
-        if (billGiver == null || billGiver is Pawn)
+        if (billGiver is null or Pawn)
         {
             return mode;
         }
 
-        var CBM = billGiver.TryGetComp<CompBestMix>();
-        if (CBM == null)
+        var cbm = billGiver.TryGetComp<CompBestMix>();
+        if (cbm == null)
         {
             return mode;
         }
 
         var billID = bill?.GetUniqueLoadID();
-        if (billID == null)
+        if (billID == null || cbm.BillBMModes == null)
         {
             return mode;
         }
 
-        if (CBM.BillBMModes == null)
+        var billModes = cbm.BillBMModes;
+        if (billModes.Count <= 0)
         {
             return mode;
         }
 
-        var BillModes = CBM.BillBMModes;
-        if (BillModes.Count <= 0)
+        foreach (var billMode in billModes)
         {
-            return mode;
-        }
-
-        foreach (var BillMode in BillModes)
-        {
-            if (BillValuePart(BillMode) != billID)
+            if (billValuePart(billMode) != billID)
             {
                 continue;
             }
 
-            mode = ModeValuePart(BillMode);
+            mode = modeValuePart(billMode);
             break;
         }
 
         return mode;
     }
 
-    public static void SetBillBMVal(Thing billGiver, Bill bill)
+    public static void SetBillBmVal(Thing billGiver, Bill bill)
     {
-        var CBM = billGiver?.TryGetComp<CompBestMix>();
-        if (CBM != null)
+        var cbm = billGiver?.TryGetComp<CompBestMix>();
+        if (cbm != null)
         {
-            DoBillModeSelMenu(CBM, bill);
+            doBillModeSelMenu(cbm, bill);
         }
     }
 
-    private static void DoBillModeSelMenu(CompBestMix CBM, Bill bill)
+    private static void doBillModeSelMenu(CompBestMix cbm, Bill bill)
     {
         var list = new List<FloatMenuOption>();
 
         string text = "BestMix.DoNothing".Translate();
-        list.Add(new FloatMenuOption(text, delegate { SetBMixBillMode(CBM, bill, "NON", true); },
+        list.Add(new FloatMenuOption(text, delegate { SetBMixBillMode(cbm, bill, "NON", true); },
             MenuOptionPriority.Default, null, null, 29f));
 
         foreach (var mode in BestMixUtility.BMixModes())
         {
             text = BestMixUtility.GetBMixModeDisplay(mode);
-            list.Add(new FloatMenuOption(text, delegate { SetBMixBillMode(CBM, bill, mode, true); },
+            list.Add(new FloatMenuOption(text, delegate { SetBMixBillMode(cbm, bill, mode, true); },
                 MenuOptionPriority.Default, null, null, 29f));
         }
 
@@ -138,25 +131,25 @@ public class BMBillUtility
         Find.WindowStack.Add(new FloatMenu(sortedlist));
     }
 
-    public static void SetBMixBillMode(CompBestMix CBM, Bill bill, string mode, bool set)
+    public static void SetBMixBillMode(CompBestMix cbm, Bill bill, string mode, bool set)
     {
-        if (CBM == null || bill == null)
+        if (cbm == null || bill == null)
         {
             return;
         }
 
         var billID = bill.GetUniqueLoadID();
-        var newlist = new List<string>();
-        if (CBM.BillBMModes != null)
+        var newList = new List<string>();
+        if (cbm.BillBMModes != null)
         {
-            var current = CBM.BillBMModes;
+            var current = cbm.BillBMModes;
             if (current.Count > 0)
             {
                 foreach (var BillBMMode in current)
                 {
-                    if (BillValuePart(BillBMMode) != billID)
+                    if (billValuePart(BillBMMode) != billID)
                     {
-                        newlist.AddDistinct(BillBMMode);
+                        newList.AddDistinct(BillBMMode);
                     }
                 }
             }
@@ -164,17 +157,16 @@ public class BMBillUtility
             current.Clear();
         }
 
-        newlist.AddDistinct(NewBillBMMode(billID, mode));
+        newList.AddDistinct(newBillBmMode(billID, mode));
 
-        CBM.BillBMModes = newlist;
-        //newlist.Clear();
+        cbm.BillBMModes = newList;
     }
 
-    public static void CheckBillBMValues(CompBestMix CBM, Thing billGiver, List<string> BillModes)
+    public static void CheckBillBmValues(CompBestMix cbm, Thing billGiver, List<string> billModes)
     {
-        if (BillModes != null)
+        if (billModes != null)
         {
-            if (BillModes.Count <= 0)
+            if (billModes.Count <= 0)
             {
                 return;
             }
@@ -198,37 +190,35 @@ public class BMBillUtility
                 }
             }
 
-            foreach (var BillMode in BillModes)
+            foreach (var billMode in billModes)
             {
-                if (billIDs.Contains(BillValuePart(BillMode)))
+                if (billIDs.Contains(billValuePart(billMode)))
                 {
-                    newBillModes.AddDistinct(BillMode);
+                    newBillModes.AddDistinct(billMode);
                 }
             }
 
-            CBM.BillBMModes = newBillModes;
-            //newBillModes.Clear();
-            //billIDs.Clear();
+            cbm.BillBMModes = newBillModes;
         }
         else
         {
-            CBM.BillBMModes = [];
+            cbm.BillBMModes = [];
         }
     }
 
-    private static string NewBillBMMode(string id, string mode)
+    private static string newBillBmMode(string id, string mode)
     {
         return $"{id};{mode}";
     }
 
-    private static string BillValuePart(string value)
+    private static string billValuePart(string value)
     {
         char[] divider = [';'];
         var segments = value.Split(divider);
         return segments[0];
     }
 
-    private static string ModeValuePart(string value)
+    private static string modeValuePart(string value)
     {
         char[] divider = [';'];
         var segments = value.Split(divider);

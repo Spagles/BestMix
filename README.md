@@ -1,4 +1,4 @@
-# BestMix
+# [Best Mix (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2195986094)
 
 ![Image](https://i.imgur.com/buuPQel.png)
 
@@ -11,7 +11,7 @@ https://steamcommunity.com/sharedfiles/filedetails/?id=1713295858
 - Added support for Nutrition-stat, High and Low
 - Updated chinese translation, thanks NBurger500
 
-[strike]**As the bill-logic have been changed and my skills in Transpiling-code is not high enough to fix it, the mod is as of now not working.**[/strike]
+~~**As the bill-logic have been changed and my skills in Transpiling-code is not high enough to fix it, the mod is as of now not working.**~~
 
 Restored functionality thanks to:
 
@@ -22,10 +22,8 @@ Restored functionality thanks to:
 
 
 ![Image](https://i.imgur.com/pufA0kM.png)
-
 	
 ![Image](https://i.imgur.com/Z4GOv8H.png)
-
 
 # Overview
  V1.1
@@ -95,9 +93,9 @@ The mod will also set the maximum number of bills for a billgiver to 125. (Compa
 # Credits
 
 
-https://steamcommunity.com/id/madeline1324/myworkshopfiles/?appid=294100]Madeline - a co-author, for the involved harmony transpiler work that makes this mod possible.
+[Madeline](https://steamcommunity.com/id/madeline1324/myworkshopfiles/?appid=294100) - a co-author, for the involved harmony transpiler work that makes this mod possible.
 
-https://steamcommunity.com/id/littlewhitemouse/myworkshopfiles/?appid=294100]LWM - helping with testing.
+[LWM](https://steamcommunity.com/id/littlewhitemouse/myworkshopfiles/?appid=294100) - helping with testing.
 
 KV - "No max bills" allowing more bills for a billgiver. Added functionality (slightly modified).
 
@@ -118,13 +116,12 @@ Deep Storage (V1.1 when converted) - to further improve the ingredient handling 
 
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib or the standalone https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404]Uploader and command Ctrl+F12
+-  Post your error-log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) or the standalone [Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) and command Ctrl+F12
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
--  Use https://github.com/RimSort/RimSort/releases/latest]RimSort to sort your mods
+-  Use [RimSort](https://github.com/RimSort/RimSort/releases/latest) to sort your mods
 
+ 
 
-
-https://steamcommunity.com/sharedfiles/filedetails/changelog/2195986094]![Image](https://img.shields.io/github/v/release/emipa606/BestMix?label=latest%20version&style=plastic&color=9f1111&labelColor=black)
-
+[![Image](https://img.shields.io/github/v/release/emipa606/BestMix?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2195986094) | tags:  ingredient selection

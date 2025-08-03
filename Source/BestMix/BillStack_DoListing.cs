@@ -8,8 +8,8 @@ using Verse;
 
 namespace BestMix;
 
-[HarmonyPatch(typeof(BillStack), "DoListing")]
-public static class Patch_BillStack_DoListing
+[HarmonyPatch(typeof(BillStack), nameof(BillStack.DoListing))]
+public static class BillStack_DoListing
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
@@ -18,8 +18,8 @@ public static class Patch_BillStack_DoListing
             yield break;
         }
 
-        var newMax = 125;
-        AccessTools.Property(typeof(BillStack), "Count").GetGetMethod();
+        const int newMax = 125;
+        AccessTools.Property(typeof(BillStack), nameof(BillStack.Count)).GetGetMethod();
         var instructionList = instructions.ToList();
         var found = false;
         int num;

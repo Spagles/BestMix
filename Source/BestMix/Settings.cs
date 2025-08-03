@@ -18,7 +18,7 @@ public class Settings : ModSettings
     private float BillBMPos = 150f; // not saved
     public bool DebugChosen;
     public bool DebugFound;
-    public bool DebugIgnore;
+    private bool DebugIgnore;
     public bool DebugSort;
 
     public bool IncludeRegionLimiter = true;
@@ -29,74 +29,74 @@ public class Settings : ModSettings
 
     public void DoWindowContents(Rect canvas)
     {
-        var gap = 10f;
-        var listing_Standard = new Listing_Standard
+        const float gap = 10f;
+        var listingStandard = new Listing_Standard
         {
             ColumnWidth = canvas.width
         };
-        listing_Standard.Begin(canvas);
-        listing_Standard.Gap(gap);
+        listingStandard.Begin(canvas);
+        listingStandard.Gap(gap);
         checked
         {
-            listing_Standard.CheckboxLabeled("BestMix.AllowBestMix".Translate(), ref AllowBestMix);
-            listing_Standard.Gap(gap);
-            listing_Standard.CheckboxLabeled("BestMix.AllowMealMakersOnly".Translate(), ref AllowMealMakersOnly);
-            listing_Standard.Gap(gap * 2f);
+            listingStandard.CheckboxLabeled("BestMix.AllowBestMix".Translate(), ref AllowBestMix);
+            listingStandard.Gap(gap);
+            listingStandard.CheckboxLabeled("BestMix.AllowMealMakersOnly".Translate(), ref AllowMealMakersOnly);
+            listingStandard.Gap(gap * 2f);
 
             if (useStock)
             {
-                listing_Standard.CheckboxLabeled("BestMix.MapStock".Translate(), ref mapStock);
-                listing_Standard.Gap(gap);
-                listing_Standard.CheckboxLabeled("BestMix.InStorage".Translate(), ref inStorage);
-                listing_Standard.Gap(gap);
+                listingStandard.CheckboxLabeled("BestMix.MapStock".Translate(), ref mapStock);
+                listingStandard.Gap(gap);
+                listingStandard.CheckboxLabeled("BestMix.InStorage".Translate(), ref inStorage);
+                listingStandard.Gap(gap);
             }
 
-            listing_Standard.Gap(gap);
+            listingStandard.Gap(gap);
 
             if (adjBillBMPos)
             {
-                listing_Standard.Label("BestMix.BillBMPos".Translate() + "  " + (int)BillBMPos);
-                BillBMPos = (int)listing_Standard.Slider((int)BillBMPos, 150f, 200f);
-                listing_Standard.Gap(gap);
+                listingStandard.Label("BestMix.BillBMPos".Translate() + "  " + (int)BillBMPos);
+                BillBMPos = (int)listingStandard.Slider((int)BillBMPos, 150f, 200f);
+                listingStandard.Gap(gap);
             }
 
-            listing_Standard.Gap(gap);
+            listingStandard.Gap(gap);
             // if restrict by radius
             if (RadiusRestrict)
             {
-                listing_Standard.CheckboxLabeled("BestMix.UseRadiusLimit".Translate(), ref UseRadiusLimit);
-                listing_Standard.Gap(gap);
-                listing_Standard.Label("BestMix.RadiusLimit".Translate() + "  " + RadiusLimit);
-                RadiusLimit = (int)listing_Standard.Slider(RadiusLimit, 10f, 100f);
-                listing_Standard.Gap(gap);
+                listingStandard.CheckboxLabeled("BestMix.UseRadiusLimit".Translate(), ref UseRadiusLimit);
+                listingStandard.Gap(gap);
+                listingStandard.Label("BestMix.RadiusLimit".Translate() + "  " + RadiusLimit);
+                RadiusLimit = (int)listingStandard.Slider(RadiusLimit, 10f, 100f);
+                listingStandard.Gap(gap);
             }
 
             // debug
             if (Prefs.DevMode && DebugMaster)
             {
-                listing_Standard.Gap(gap * 2);
-                listing_Standard.CheckboxLabeled("BestMix.IncludeRegionLimiter".Translate(),
+                listingStandard.Gap(gap * 2);
+                listingStandard.CheckboxLabeled("BestMix.IncludeRegionLimiter".Translate(),
                     ref IncludeRegionLimiter);
-                listing_Standard.Gap(gap * 2);
-                listing_Standard.CheckboxLabeled("BestMix.DebugSort".Translate(), ref DebugSort);
-                listing_Standard.Gap(gap);
-                listing_Standard.CheckboxLabeled("BestMix.DebugChosen".Translate(), ref DebugChosen);
-                listing_Standard.Gap(gap);
-                listing_Standard.CheckboxLabeled("BestMix.DebugFound".Translate(), ref DebugFound);
-                listing_Standard.Gap(gap * 2);
-                listing_Standard.CheckboxLabeled("BestMix.DebugIgnore".Translate(), ref DebugIgnore);
-                listing_Standard.Gap(gap);
+                listingStandard.Gap(gap * 2);
+                listingStandard.CheckboxLabeled("BestMix.DebugSort".Translate(), ref DebugSort);
+                listingStandard.Gap(gap);
+                listingStandard.CheckboxLabeled("BestMix.DebugChosen".Translate(), ref DebugChosen);
+                listingStandard.Gap(gap);
+                listingStandard.CheckboxLabeled("BestMix.DebugFound".Translate(), ref DebugFound);
+                listingStandard.Gap(gap * 2);
+                listingStandard.CheckboxLabeled("BestMix.DebugIgnore".Translate(), ref DebugIgnore);
+                listingStandard.Gap(gap);
             }
 
-            if (Controller.currentVersion != null)
+            if (Controller.CurrentVersion != null)
             {
-                listing_Standard.Gap();
+                listingStandard.Gap();
                 GUI.contentColor = Color.gray;
-                listing_Standard.Label("BestMix.VersionInfo".Translate(Controller.currentVersion));
+                listingStandard.Label("BestMix.VersionInfo".Translate(Controller.CurrentVersion));
                 GUI.contentColor = Color.white;
             }
 
-            listing_Standard.End();
+            listingStandard.End();
         }
     }
 

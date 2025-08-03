@@ -8,7 +8,7 @@ namespace BestMix;
 [StaticConstructorOnStartup]
 internal static class MultiplayerSupport
 {
-    private static readonly Harmony harmony = new Harmony("rimworld.pelador.bestmix.multiplayersupport");
+    private static readonly Harmony harmony = new("rimworld.pelador.bestmix.multiplayersupport");
 
     static MultiplayerSupport()
     {
@@ -24,28 +24,28 @@ internal static class MultiplayerSupport
         // Add all Methods where there is Rand calls here
         var methods = new[]
         {
-            AccessTools.Method(typeof(BestMixUtility), nameof(BestMixUtility.RNDFloat))
+            AccessTools.Method(typeof(BestMixUtility), nameof(BestMixUtility.RndFloat))
         };
         foreach (var method in methods)
         {
-            FixRNG(method);
+            fixRng(method);
         }
     }
 
-    private static void FixRNG(MethodInfo method)
+    private static void fixRng(MethodInfo method)
     {
         harmony.Patch(method,
-            new HarmonyMethod(typeof(MultiplayerSupport), nameof(FixRNGPre)),
-            new HarmonyMethod(typeof(MultiplayerSupport), nameof(FixRNGPos))
+            new HarmonyMethod(typeof(MultiplayerSupport), nameof(fixRngPre)),
+            new HarmonyMethod(typeof(MultiplayerSupport), nameof(fixRngPos))
         );
     }
 
-    private static void FixRNGPre()
+    private static void fixRngPre()
     {
         Rand.PushState(Find.TickManager.TicksAbs);
     }
 
-    private static void FixRNGPos()
+    private static void fixRngPos()
     {
         Rand.PopState();
     }

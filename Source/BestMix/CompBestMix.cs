@@ -13,7 +13,7 @@ public class CompBestMix : ThingComp
     public bool BMixDebug;
     public string CurMode;
 
-    private CompProperties_BestMix BMProps => (CompProperties_BestMix)props;
+    private CompProperties_BestMix BmProps => (CompProperties_BestMix)props;
 
     public override void PostExposeData()
     {
@@ -27,14 +27,11 @@ public class CompBestMix : ThingComp
     {
         base.PostSpawnSetup(respawningAfterLoad);
 
-        if (CurMode == null)
-        {
-            CurMode = BMProps.DefaultMode;
-        }
+        CurMode ??= BmProps.DefaultMode;
 
         if (respawningAfterLoad)
         {
-            BMBillUtility.CheckBillBMValues(this, parent, BillBMModes);
+            BMBillUtility.CheckBillBmValues(this, parent, BillBMModes);
         }
     }
 
@@ -45,8 +42,8 @@ public class CompBestMix : ThingComp
             return null;
         }
 
-        var ModeDisplay = BestMixUtility.GetBMixModeDisplay(CurMode);
-        return "BestMix.CurrentMode".Translate(ModeDisplay);
+        var modeDisplay = BestMixUtility.GetBMixModeDisplay(CurMode);
+        return "BestMix.CurrentMode".Translate(modeDisplay);
     }
 
     public override IEnumerable<Gizmo> CompGetGizmosExtra()
@@ -66,52 +63,54 @@ public class CompBestMix : ThingComp
             yield break;
         }
 
-        var BMixIconPath = BestMixUtility.GetBMixIconPath(CurMode);
+        var bMixIconPath = BestMixUtility.GetBMixIconPath(CurMode);
         yield return new Command_Action
         {
             action = delegate
             {
                 SoundDefOf.Tick_Tiny.PlayOneShotOnCamera();
-                DoModeSelMenu();
+                doModeSelMenu();
             },
             hotKey = KeyBindingDefOf.Misc1,
             defaultLabel = "BestMix.SelectModeLabel".Translate(),
             defaultDesc = "BestMix.SelectModeDesc".Translate(),
-            icon = ContentFinder<Texture2D>.Get(BMixIconPath)
+            icon = ContentFinder<Texture2D>.Get(bMixIconPath)
         };
         if (!Prefs.DevMode || !Controller.Settings.DebugMaster)
         {
             yield break;
         }
 
-        var DebugIconPath = "UI/BestMix/DebugList";
+        const string debugIconPath = "UI/BestMix/DebugList";
         yield return new Command_Toggle
         {
-            icon = ContentFinder<Texture2D>.Get(DebugIconPath),
+            icon = ContentFinder<Texture2D>.Get(debugIconPath),
             defaultLabel = "BestMix.DebugLabel".Translate(),
             defaultDesc = "BestMix.DebugDesc".Translate(),
             isActive = () => BMixDebug,
-            toggleAction = delegate { ToggleDebug(BMixDebug); }
+            toggleAction = delegate { toggleDebug(BMixDebug); }
         };
     }
 
-    private void ToggleDebug(bool flag)
+    private void toggleDebug(bool flag)
     {
         BMixDebug = !flag;
     }
 
-    private void DoModeSelMenu()
+    private void doModeSelMenu()
     {
         var list = new List<FloatMenuOption>();
 
         string text = "BestMix.DoNothing".Translate();
-        list.Add(new FloatMenuOption(text, delegate { SetBMixMode(this, null, false); },
+        var icon = ContentFinder<Texture2D>.Get(BestMixUtility.GetBMixIconPath("Nothing"));
+        list.Add(new FloatMenuOption(text, delegate { SetBMixMode(this, "DIS", true); }, icon, Color.white,
             MenuOptionPriority.Default, null, null, 29f));
 
         foreach (var mode in BestMixUtility.BMixModes())
         {
             text = BestMixUtility.GetBMixModeDisplay(mode);
-            list.Add(new FloatMenuOption(text, delegate { SetBMixMode(this, mode, true); },
+            icon = ContentFinder<Texture2D>.Get(BestMixUtility.GetBMixIconPath(mode));
+            list.Add(new FloatMenuOption(text, delegate { SetBMixMode(this, mode, true); }, icon, Color.white,
                 MenuOptionPriority.Default, null, null, 29f));
         }
 
@@ -119,12 +118,11 @@ public class CompBestMix : ThingComp
         Find.WindowStack.Add(new FloatMenu(sortedlist));
     }
 
-    public void SetBMixMode(CompBestMix CBM, string GizmoSel, bool edit)
+    public void SetBMixMode(CompBestMix cbm, string gizmoSel, bool edit)
     {
         if (edit)
         {
-            //MultiplayerSupport.MPLog("Gizmo mode:", GizmoSel);
-            CBM.CurMode = GizmoSel;
+            cbm.CurMode = gizmoSel;
         }
     }
 }
